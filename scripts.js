@@ -23,7 +23,6 @@ function appendBookToShelf(book) {
         Read: ${book.read}<br>
     `;
     shelf.appendChild(bookDiv);
-
     //x to remove book
     const removeBtn = bookDiv.querySelector('.remove-btn');
     removeBtn.addEventListener('click', () =>{
@@ -34,8 +33,6 @@ function appendBookToShelf(book) {
 //store the book and its data
 function addBookToLibrary(thisBook) {
     myLibrary.push(thisBook);
-    //add to shelf
-    appendBookToShelf(thisBook);
 }
 
 //add user books to library
@@ -50,7 +47,12 @@ form.addEventListener('submit', function(event) {
     //create new book
     const newBook = new Book(title, author, pages, read);
     addBookToLibrary(newBook);
+    renderLibrary();
 });
 
 //pull books from library and display on shelf
-myLibrary.forEach(book => appendBookToShelf(book));
+function renderLibrary() {
+    shelf.innerHTML = '';
+    myLibrary.forEach(book => appendBookToShelf(book));
+}
+renderLibrary();
