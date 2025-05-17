@@ -1,4 +1,5 @@
 const myLibrary=[];
+//const libraryContent = document.getElementById('library-content');
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -27,6 +28,10 @@ function appendBookToShelf(book) {
     const removeBtn = bookDiv.querySelector('.remove-btn');
     removeBtn.addEventListener('click', () =>{
         bookDiv.remove();
+        //remove from library by id
+        const index = myLibrary.findIndex(b => b.id===book.id);
+        myLibrary.splice(index, 1);
+        renderLibrary();
     });
 }
 
@@ -35,7 +40,7 @@ function addBookToLibrary(thisBook) {
     myLibrary.push(thisBook);
 }
 
-//add user books to library
+//add user's book input to library
 const form = document.getElementById('book-form');
 form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -54,5 +59,6 @@ form.addEventListener('submit', function(event) {
 function renderLibrary() {
     shelf.innerHTML = '';
     myLibrary.forEach(book => appendBookToShelf(book));
+    //libraryContent.textContent = JSON.stringify(myLibrary, null, 2);
 }
 renderLibrary();
