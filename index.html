@@ -11,24 +11,25 @@
     <h1>Welcome to the library</h1>
     <br>
     <h3>Here are the books</h3>
-    <button type="button">New book
+    <form id='book-form'>
         <fieldset>
-            <legend>Book details</legend>
-            <label for="title">New book title:</label>
-            <input type="text" name="title" id="title">
-            <label for="author" id="author">Author:</label>
-            <input type="text" name="author" id="author">
-            <label for="pages">Page count:</label>
-            <input type="number" name="pages" id="pages">
-            <label>Read?</label>
-            <label for="read-yes">Yes</label>
-            <input type="radio" name="read" id="read-yes" value="true">
-            <label for="read-no">No</label>
-            <input type="radio" name="read" id="read-no">
+                <legend>Book details</legend>
+                <label for="title">New book title:</label>
+                <input type="text" name="title" id="title" required>
+                <label for="author" >Author:</label>
+                <input type="text" name="author" id="author" required>
+                <label for="pages">Page count:</label>
+                <input type="number" name="pages" id="pages"required>
+                <label>Read?</label>
+                <label for="read-yes">Yes</label>
+                <input type="radio" name="read" id="read-yes" value="true" required>
+                <label for="read-no">No</label>
+                <input type="radio" name="read" id="read-no">
+                <button type="submit">Add new book</button>
         </fieldset>
-    </button>
+    </form>
+    <br>
     <div id="shelf">
-
     </div>
 </body>
 </html>
