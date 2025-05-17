@@ -1,0 +1,20 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+}
+
+form {
+}
+
+#shelf {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+#shelf div {
+    border: 1px solid blue;
+    height: 6rem;
+}

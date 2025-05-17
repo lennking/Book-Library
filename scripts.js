@@ -12,8 +12,20 @@ const shelf = document.getElementById("shelf");
 
 function appendBookToShelf(book) {
     const bookDiv = document.createElement('div');
-    bookDiv.textContent = `${book.title} by ${book.author}, ${book.pages} pages, Read: ${book.read}`;
+    bookDiv.innerHTML = `
+        <strong>${book.title}</strong>
+        <button type='button' class='remove-btn'>x</button><br>
+        Author: ${book.author}<br>
+        Pages: ${book.pages}<br>
+        Read: ${book.read}<br>
+    `;
     shelf.appendChild(bookDiv);
+
+    //x to remove book
+    const removeBtn = bookDiv.querySelector('.remove-btn');
+    removeBtn.addEventListener('click', () =>{
+        bookDiv.remove();
+    });
 }
 
 function addBookToLibrary(thisBook) {
