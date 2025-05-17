@@ -9,7 +9,7 @@ function Book(title, author, pages, read) {
     this.id = crypto.randomUUID();
 }
 //book you've had
-let book1 = new Book("The Hobbit", "JRR Tolkien", 320, "no");
+let book1 = new Book("The Hobbit", "JRR Tolkien", 320, false);
 addBookToLibrary(book1);
 
 //add book to virtual shelf
@@ -21,7 +21,9 @@ function appendBookToShelf(book) {
         <strong>${book.title}</strong><br>
         Author: ${book.author}<br>
         Pages: ${book.pages}<br>
-        Read: ${book.read}<br>
+        <label for='toggle'>Read:</label>
+        <input type='checkbox' name='toggle' class='toggle' ${book.read ? "checked" : ""}> 
+        ${book.read}
     `;
     shelf.appendChild(bookDiv);
     //x to remove book
@@ -31,6 +33,10 @@ function appendBookToShelf(book) {
         //remove from library by id
         const index = myLibrary.findIndex(b => b.id===book.id);
         myLibrary.splice(index, 1);
+        renderLibrary();
+    });
+    bookDiv.querySelector('.toggle').addEventListener('change', ()=>  {
+        book.toggleRead();
         renderLibrary();
     });
 }
@@ -61,4 +67,10 @@ function renderLibrary() {
     myLibrary.forEach(book => appendBookToShelf(book));
     //libraryContent.textContent = JSON.stringify(myLibrary, null, 2);
 }
+
+//toggle read state of added books
+Book.prototype.toggleRead = function() {
+    this.read = !this.read;
+};
+
 renderLibrary();
