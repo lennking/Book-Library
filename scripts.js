@@ -7,14 +7,17 @@ function Book(title, author, pages, read) {
     this.read = read;
     this.id = crypto.randomUUID();
 }
+//book you've had
+let book1 = new Book("The Hobbit", "JRR Tolkien", 320, false);
+addBookToLibrary(book1);
 
+//add book to virtual shelf
 const shelf = document.getElementById("shelf");
-
 function appendBookToShelf(book) {
     const bookDiv = document.createElement('div');
     bookDiv.innerHTML = `
-        <strong>${book.title}</strong>
-        <button type='button' class='remove-btn'>x</button><br>
+        <button type='button' class='remove-btn'>x</button>
+        <strong>${book.title}</strong><br>
         Author: ${book.author}<br>
         Pages: ${book.pages}<br>
         Read: ${book.read}<br>
@@ -28,14 +31,14 @@ function appendBookToShelf(book) {
     });
 }
 
+//store the book and its data
 function addBookToLibrary(thisBook) {
     myLibrary.push(thisBook);
+    //add to shelf
     appendBookToShelf(thisBook);
 }
 
-let book1 = new Book("The Hobbit", "JRR Tolkien", 320, false);
-addBookToLibrary(book1);
-
+//add user books to library
 const form = document.getElementById('book-form');
 form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -47,5 +50,7 @@ form.addEventListener('submit', function(event) {
     //create new book
     const newBook = new Book(title, author, pages, read);
     addBookToLibrary(newBook);
-
 });
+
+//pull books from library and display on shelf
+myLibrary.forEach(book => appendBookToShelf(book));
