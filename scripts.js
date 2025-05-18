@@ -57,8 +57,8 @@ function render() {
             Author: ${book.author}<br>
             Pages: ${book.pages}<br>
             <label for='toggle'>Read:</label>
-            <input type='checkbox' name='toggle' class='toggle' ${book.read ? "checked" : ""}> 
-            ${book.read}
+            <input type='checkbox' name='toggle' class='toggle' ${book.read ? "checked" : ""}>
+            ${book.read ? "yes" : "no"} 
         `;
         //click x to remove book
         card.querySelector('.remove-btn')
