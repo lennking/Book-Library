@@ -1,4 +1,28 @@
-const myLibrary=[];
+class Library {
+    #myLibrary=[];
+    //store the book and its data
+    add(book) {
+        if (!(book instanceof Book)) {
+            throw new TypeError("Library.add expects a Book");
+        }
+        this.#myLibrary.push(book);
+    }
+    //remove from library by id
+    remove(id) {    
+        const index = this.#myLibrary.findIndex(b => b.id===id);
+        this.#myLibrary.splice(index, 1);
+    }
+    get books() {
+        return [...this.#myLibrary];
+    }
+    #find(id) {
+        return this.#myLibrary.find(b => b.id === id);
+    }
+    toggleRead(id) {
+        this.#find(id)?.toggleRead();
+    }
+}
+
 //const libraryContent = document.getElementById('library-content');
 class Book {
     constructor(title, author, pages, read = false) {
@@ -8,6 +32,7 @@ class Book {
         this.read = read;
         this.id = crypto.randomUUID();
     }
+    //change book read state
     toggleRead() {
         this.read = !this.read;
     }
@@ -15,7 +40,7 @@ class Book {
     
 //book you've had
 let book1 = new Book("The Hobbit", "JRR Tolkien", 320, false);
-addBookToLibrary(book1);
+Library.add(book1);
 
 //add book to virtual shelf
 const shelf = document.getElementById("shelf");
@@ -35,20 +60,13 @@ function appendBookToShelf(book) {
     const removeBtn = bookDiv.querySelector('.remove-btn');
     removeBtn.addEventListener('click', () =>{
         bookDiv.remove();
-        //remove from library by id
-        const index = myLibrary.findIndex(b => b.id===book.id);
-        myLibrary.splice(index, 1);
+        
         renderLibrary();
     });
     bookDiv.querySelector('.toggle').addEventListener('change', ()=>  {
         book.toggleRead();
         renderLibrary();
     });
-}
-
-//store the book and its data
-function addBookToLibrary(thisBook) {
-    myLibrary.push(thisBook);
 }
 
 //add user's book input to library
@@ -62,7 +80,7 @@ form.addEventListener('submit', function(event) {
     const read = document.querySelector('input[name="read"]:checked')?.value;
     //create new book
     const newBook = new Book(title, author, pages, read);
-    addBookToLibrary(newBook);
+    Library.add(newBook);
     renderLibrary();
 });
 
