@@ -1,13 +1,18 @@
 const myLibrary=[];
 //const libraryContent = document.getElementById('library-content');
-
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.id = crypto.randomUUID();
+class Book {
+    constructor(title, author, pages, read = false) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.id = crypto.randomUUID();
+    }
+    toggleRead() {
+        this.read = !this.read;
+    }
 }
+    
 //book you've had
 let book1 = new Book("The Hobbit", "JRR Tolkien", 320, false);
 addBookToLibrary(book1);
@@ -67,10 +72,5 @@ function renderLibrary() {
     myLibrary.forEach(book => appendBookToShelf(book));
     //libraryContent.textContent = JSON.stringify(myLibrary, null, 2);
 }
-
-//toggle read state of added books
-Book.prototype.toggleRead = function() {
-    this.read = !this.read;
-};
 
 renderLibrary();
