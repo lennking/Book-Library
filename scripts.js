@@ -39,38 +39,43 @@ class Book {
 }
     
 //book you've had
+const library = new Library();
 let book1 = new Book("The Hobbit", "JRR Tolkien", 320, false);
-Library.add(book1);
+library.add(book1);
+
+const shelf = document.getElementById("shelf");
+const form  = document.getElementById("book-form");
 
 //add book to virtual shelf
-const shelf = document.getElementById("shelf");
-function appendBookToShelf(book) {
-    const bookDiv = document.createElement('div');
-    bookDiv.innerHTML = `
-        <button type='button' class='remove-btn'>x</button>
-        <strong>${book.title}</strong><br>
-        Author: ${book.author}<br>
-        Pages: ${book.pages}<br>
-        <label for='toggle'>Read:</label>
-        <input type='checkbox' name='toggle' class='toggle' ${book.read ? "checked" : ""}> 
-        ${book.read}
-    `;
-    shelf.appendChild(bookDiv);
-    //x to remove book
-    const removeBtn = bookDiv.querySelector('.remove-btn');
-    removeBtn.addEventListener('click', () =>{
-        bookDiv.remove();
-        
-        renderLibrary();
-    });
-    bookDiv.querySelector('.toggle').addEventListener('change', ()=>  {
-        book.toggleRead();
-        renderLibrary();
-    });
+function render() {
+    shelf.innerHTML = '';
+    library.books.forEach(book => {
+        const card = document.createElement('div');
+        card.innerHTML = `
+            <button type='button' class='remove-btn'>x</button>
+            <strong>${book.title}</strong><br>
+            Author: ${book.author}<br>
+            Pages: ${book.pages}<br>
+            <label for='toggle'>Read:</label>
+            <input type='checkbox' name='toggle' class='toggle' ${book.read ? "checked" : ""}> 
+            ${book.read}
+        `;
+        //click x to remove book
+        card.querySelector('.remove-btn')
+            .addEventListener('click', () =>{
+            library.remove(book.id);
+            render();
+        });
+        card.querySelector('.toggle')
+            .addEventListener('change', ()=>  {
+            library.toggleRead(book.id);
+            render();
+        });
+    shelf.appendChild(card);
+    })
 }
 
 //add user's book input to library
-const form = document.getElementById('book-form');
 form.addEventListener('submit', function(event) {
     event.preventDefault();
     //get book details
@@ -80,15 +85,8 @@ form.addEventListener('submit', function(event) {
     const read = document.querySelector('input[name="read"]:checked')?.value;
     //create new book
     const newBook = new Book(title, author, pages, read);
-    Library.add(newBook);
-    renderLibrary();
+    library.add(newBook);
+    render();
 });
 
-//pull books from library and display on shelf
-function renderLibrary() {
-    shelf.innerHTML = '';
-    myLibrary.forEach(book => appendBookToShelf(book));
-    //libraryContent.textContent = JSON.stringify(myLibrary, null, 2);
-}
-
-renderLibrary();
+render();
